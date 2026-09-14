@@ -33,5 +33,3 @@ jobs:
 
       - name: Run tests
         run: uv run pytest
-    env:
-        VIRTUAL_ENV: .venv
