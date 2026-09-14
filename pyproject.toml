@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "pipeforge"
 description = "A data pipeline CLI tool"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 dynamic = ["version"]
 dependencies = [
     "typer>=0.12.0",
