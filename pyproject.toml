@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "pipeforge"
 description = "A data pipeline CLI tool"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 dynamic = ["version"]
 dependencies = [
     "typer>=0.12.0",
@@ -31,7 +31,7 @@ pipeforge = "pipeforge.cli:app"
 [tool.hatch.version]
 path = "src/pipeforge/__init__.py"
 
-[tool.hatchling.build.targets.wheel]
+[tool.hatch.build.targets.wheel]
 packages = ["src/pipeforge"]
 
 [tool.ruff]
@@ -51,4 +51,4 @@ warn_unreachable = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "--cov=/pipeforge --cov-report=term-missing"
+addopts = "--cov=pipeforge --cov-report=term-missing"
