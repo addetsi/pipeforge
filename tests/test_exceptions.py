@@ -1,6 +1,7 @@
 """Tests for the exception hierarchy in PipeForge."""
 
 import pytest
+
 from pipeforge.exceptions import (
     ConfigError,
     PipeForgeError,

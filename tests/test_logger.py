@@ -4,6 +4,7 @@ import logging
 from pathlib import Path
 
 import pytest
+
 from pipeforge.logger import configure_logging, get_logger
 
 
