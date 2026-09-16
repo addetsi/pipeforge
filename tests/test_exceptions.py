@@ -40,3 +40,17 @@ def test_subclasses_inherit_from_base() -> None:
     for error_class in error_classes:
         with pytest.raises(PipeForgeError):
             raise error_class("BOOM")
+
+
+def test_repr_shows_class_and_fields() -> None:
+    """The repr is unabmbiguous for debugging."""
+    err = ConfigError("Missing field", {"field": "schema_path"})
+    assert repr(err) == (
+        "ConfigError(message='Missing field',context={'field': 'schema_path'})"
+    )
+
+
+def test_error_appends_context() -> None:
+    """Context is rendered alongside the message."""
+    err = ConfigError("Missing field", {"field": "schema_path"})
+    assert str(err) == "Missing field (field=schema_path)"
