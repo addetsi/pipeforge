@@ -22,7 +22,7 @@ def test_context_defaults_to_empty_dct() -> None:
 
 
 def test_context_is_not_shared_between_instances() -> None:
-    """Each instance gets its own context dictionary."""
+    """Each instance gets its own context and dictionary."""
     first = ConfigError("first")
     second = ConfigError("second")
     first.context["file"] = "pipeline.yml"
