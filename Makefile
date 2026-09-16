@@ -11,6 +11,7 @@ lint:
 format:
 	ruff format .
 
+
 typecheck:
 	mypy src/
 

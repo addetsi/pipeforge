@@ -18,11 +18,10 @@ class PipeForgeError(Exception):
         self.context = context or {}
 
     def __str__(self) -> str:
-        """Return the messaage, with context appended if present."""
+        """Return the message, with context appended if present."""
         if not self.context:
             return self.message
         details = ", ".join(f"{k}={v}" for k, v in self.context.items())
-
         return f"{self.message} ({details})"
 
     def __repr__(self) -> str:
