@@ -11,6 +11,7 @@ from pydantic import BaseModel, Field
 from pipeforge.config import ColumnSchema, DataSchema
 from pipeforge.exceptions import SchemaError
 from pipeforge.logger import get_logger
+from pipeforge.utils import is_null
 
 logger = get_logger(__name__)
 
@@ -67,23 +68,6 @@ class ValidationResult(BaseModel):
     warnings: list[ValidationIssue] = Field(default_factory=list)
     row_count: int = 0
     invalid_rows: int = 0
-
-
-def is_null(value: Any) -> bool:
-    """Return True if a value represents absence of data.
-
-    CSV represents a missing value as an empty string, while JSON and
-    Parquet use None. Both are treated as null.
-
-    Args:
-        value: The raw value from a data row.
-
-    Returns:
-        True when the value is None or an empty/whitespace-only string.
-    """
-    if value is None:
-        return True
-    return isinstance(value, str) and not value.strip()
 
 
 def _is_integer(value: Any) -> bool:
