@@ -1,0 +1,37 @@
+name: orders
+description: Order data schema
+columns:
+  - name: order_id
+    data_type: integer
+    required: true
+    nullable: false
+  - name: customer_email
+    data_type: string
+    required: true
+    nullable: false
+    pattern: "^[\\w.-]+@[\\w.-]+\\.\\w+$"
+  - name: product
+    data_type: string
+    required: true
+    nullable: false
+  - name: amount
+    data_type: float
+    required: true
+    nullable: false
+    min_value: 0
+  - name: order_date
+    data_type: date
+    required: true
+    nullable: false
+    date_format: "%Y-%m-%d"
+  - name: status
+    data_type: string
+    required: true
+    nullable: false
+    allowed_values:
+      - completed
+      - pending
+      - shipped
+      - cancelled
+primary_key:
+  - order_id
