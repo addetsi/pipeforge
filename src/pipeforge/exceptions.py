@@ -53,3 +53,7 @@ class WriteError(PipeForgeError):
 
 class TransformError(PipeForgeError):
     """Raised when a transformation fails."""
+
+
+class WriterError(PipeForgeError):
+    """Raised when output cannot be written."""
