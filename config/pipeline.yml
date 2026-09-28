@@ -1,0 +1,30 @@
+name: orders_pipeline
+description: Clean and transform raw order data
+input_format: csv
+output_format: parquet
+schema_path: config/orders_schema.yml
+transforms:
+  - operation: rename
+    params:
+      mapping:
+        orderDate: order_date
+        custEmail: customer_email
+  - operation: cast
+    params:
+      order_date: date
+      amount: float
+  - operation: filter
+    params:
+      column: amount
+      operator: ">"
+      value: 0
+  - operation: add_column
+    params:
+      name: order_year
+      expression: "order_date.year"
+  - operation: drop_column
+    params:
+      columns: ["internal_id", "debug_flag"]
+output_options:
+  compression: snappy
+  partition_by: order_year
