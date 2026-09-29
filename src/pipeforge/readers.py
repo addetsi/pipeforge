@@ -205,13 +205,13 @@ def read_file(
         ReaderError: If the format is unsupported or cannot be inferred,
             or if the underlying reader fails.
     """
-    resolved = file_format or _infer_format(path)
+    resolved = file_format or infer_format(path)
     reader = _READERS[resolved]
     logger.debug("Reading %s as %s", path, resolved)
     yield from reader(path)
 
 
-def _infer_format(path: Path) -> FileFormat:
+def infer_format(path: Path) -> FileFormat:
     """Determine the file format from a path's extension."""
     try:
         return _EXTENSIONS[path.suffix.lower()]
