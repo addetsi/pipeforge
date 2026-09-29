@@ -1,0 +1,8 @@
+services:
+  pipeforge:
+    build: .
+    image: pipeforge:latest
+    volumes:
+      - ./data:/data/data:ro
+      - ./config:/data/config:ro
+      - ./output:/data/output
