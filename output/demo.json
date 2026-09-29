@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "when": "2026-01-15",
+    "name": "Díaz",
+    "note": null
+  },
+  {
+    "id": 2,
+    "when": "2026-01-16",
+    "name": "Chen",
+    "extra": "only here"
+  }
+]

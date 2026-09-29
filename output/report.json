@@ -1,0 +1,222 @@
+{
+  "file_name": "orders_messy.csv",
+  "schema_name": "orders",
+  "generated_at": "2026-09-28T18:12:29.847440Z",
+  "row_count": 8,
+  "column_count": 6,
+  "is_valid": false,
+  "invalid_rows": 6,
+  "completeness": 93.75,
+  "issues_by_type": {
+    "null_value": 3,
+    "wrong_type": 1,
+    "out_of_range": 1,
+    "bad_date_format": 1,
+    "not_allowed": 1,
+    "duplicate_key": 1,
+    "duplicate_row": 1
+  },
+  "columns": [
+    {
+      "name": "order_id",
+      "inferred_type": "integer",
+      "dominant_type": null,
+      "dominant_ratio": null,
+      "null_count": 1,
+      "null_percentage": 12.5,
+      "unique_count": 6,
+      "duplicate_count": 1,
+      "min_value": 1001.0,
+      "max_value": 1006.0,
+      "min_length": null,
+      "max_length": null,
+      "sample_values": [
+        "1001",
+        "1002",
+        "1003",
+        "1004",
+        "1005"
+      ]
+    },
+    {
+      "name": "customer_email",
+      "inferred_type": "string",
+      "dominant_type": null,
+      "dominant_ratio": null,
+      "null_count": 1,
+      "null_percentage": 12.5,
+      "unique_count": 6,
+      "duplicate_count": 1,
+      "min_value": null,
+      "max_value": null,
+      "min_length": 15,
+      "max_length": 17,
+      "sample_values": [
+        "alice@example.com",
+        "carol@example.com",
+        "dave@example.com",
+        "eve@example.com",
+        "frank@example.com"
+      ]
+    },
+    {
+      "name": "product",
+      "inferred_type": "string",
+      "dominant_type": null,
+      "dominant_ratio": null,
+      "null_count": 1,
+      "null_percentage": 12.5,
+      "unique_count": 6,
+      "duplicate_count": 1,
+      "min_value": null,
+      "max_value": null,
+      "min_length": 5,
+      "max_length": 8,
+      "sample_values": [
+        "Laptop",
+        "Phone",
+        "Tablet",
+        "Monitor",
+        "Keyboard"
+      ]
+    },
+    {
+      "name": "amount",
+      "inferred_type": "string",
+      "dominant_type": "float",
+      "dominant_ratio": 0.875,
+      "null_count": 0,
+      "null_percentage": 0.0,
+      "unique_count": 7,
+      "duplicate_count": 1,
+      "min_value": null,
+      "max_value": null,
+      "min_length": 5,
+      "max_length": 12,
+      "sample_values": [
+        "1200.00",
+        "800.00",
+        "not_a_number",
+        "-50.00",
+        "75.00"
+      ]
+    },
+    {
+      "name": "order_date",
+      "inferred_type": "string",
+      "dominant_type": "date",
+      "dominant_ratio": 0.875,
+      "null_count": 0,
+      "null_percentage": 0.0,
+      "unique_count": 7,
+      "duplicate_count": 1,
+      "min_value": null,
+      "max_value": null,
+      "min_length": 10,
+      "max_length": 12,
+      "sample_values": [
+        "2026-01-15",
+        "2026-01-16",
+        "2026-01-17",
+        "2026-01-18",
+        "invalid_date"
+      ]
+    },
+    {
+      "name": "status",
+      "inferred_type": "string",
+      "dominant_type": null,
+      "dominant_ratio": null,
+      "null_count": 0,
+      "null_percentage": 0.0,
+      "unique_count": 4,
+      "duplicate_count": 4,
+      "min_value": null,
+      "max_value": null,
+      "min_length": 7,
+      "max_length": 14,
+      "sample_values": [
+        "completed",
+        "pending",
+        "shipped",
+        "unknown_status"
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "issue_type": "null_value",
+      "message": "customer_email must not be null",
+      "row": 3,
+      "column": "customer_email",
+      "expected": "non-null",
+      "actual": "''"
+    },
+    {
+      "issue_type": "wrong_type",
+      "message": "amount is not a valid float",
+      "row": 4,
+      "column": "amount",
+      "expected": "float",
+      "actual": "'not_a_number'"
+    },
+    {
+      "issue_type": "out_of_range",
+      "message": "amount is below the minimum",
+      "row": 5,
+      "column": "amount",
+      "expected": ">= 0.0",
+      "actual": "-50.00"
+    },
+    {
+      "issue_type": "bad_date_format",
+      "message": "order_date is not a valid date",
+      "row": 6,
+      "column": "order_date",
+      "expected": "%Y-%m-%d",
+      "actual": "'invalid_date'"
+    },
+    {
+      "issue_type": "null_value",
+      "message": "product must not be null",
+      "row": 7,
+      "column": "product",
+      "expected": "non-null",
+      "actual": "''"
+    },
+    {
+      "issue_type": "not_allowed",
+      "message": "status is not an allowed value",
+      "row": 7,
+      "column": "status",
+      "expected": "completed, pending, shipped, cancelled",
+      "actual": "unknown_status"
+    },
+    {
+      "issue_type": "null_value",
+      "message": "order_id must not be null",
+      "row": 8,
+      "column": "order_id",
+      "expected": "non-null",
+      "actual": "''"
+    },
+    {
+      "issue_type": "duplicate_key",
+      "message": "Duplicate primary key, first seen on row 1",
+      "row": 2,
+      "column": "order_id",
+      "expected": "unique",
+      "actual": "1001"
+    }
+  ],
+  "warnings": [
+    {
+      "issue_type": "duplicate_row",
+      "message": "Row is identical to row 1",
+      "row": 2,
+      "column": null,
+      "expected": null,
+      "actual": null
+    }
+  ]
+}

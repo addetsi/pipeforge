@@ -4,12 +4,12 @@ from typing import Any
 
 import pytest
 
-from pipeforge.config import ColumnSchema, DataSchema
+from pipeforge.config import ColumnSchema, DataSchema, DataType
 from pipeforge.exceptions import SchemaError
+from pipeforge.utils import is_null
 from pipeforge.validators import (
     IssueType,
     check_value,
-    is_null,
     matches_type,
     validate_schema,
 )
@@ -45,9 +45,9 @@ def test_is_null(value: Any, expected: bool) -> None:
         ("maybe", "boolean", False),
     ],
 )
-def test_matches_type(value: Any, data_type: str, expected: bool) -> None:
+def test_matches_type(value: Any, data_type: DataType, expected: bool) -> None:
     """Values are checked for interpretability, not exact Python type."""
-    column = ColumnSchema(name="c", data_type=data_type)  # type: ignore[arg-type]
+    column = ColumnSchema(name="c", data_type=data_type)
     assert matches_type(value, column) is expected
 
 
