@@ -1,4 +1,10 @@
-.PHONY: install lint format typecheck test check clean
+.PHONY: install lint format typecheck test check clean docker-build docker-run
+
+docker-build:
+	docker build -t pipeforge:$(shell python -c "import pipeforge; print(pipeforge.__version__)") -t pipeforge:latest .
+
+docker-run:
+	docker compose run --rm pipeforge $(ARGS)
 
 install:
 	uv venv --python 3.11

@@ -492,7 +492,7 @@ def apply_pipeline(data: Data, transforms: list[TransformRule]) -> Data:
             ) from e
 
     logger.info(
-        "Applied %d transforms: %d rows in, %d rows out",
+        "Applied %d transforms: %d rowsin, %d rows out",
         len(transforms),
         len(data),
         len(result),
