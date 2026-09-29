@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 from pipeforge.exceptions import ReaderError
-from pipeforge.readers import read_csv, read_json
+from pipeforge.readers import read_csv, read_json, read_parquet
 
 CSV_TEXT = """order_id,amount,status
 1001,1200.00,completed
@@ -105,3 +105,41 @@ def test_read_json_rejects_non_object_elements(tmp_path: Path) -> None:
     with pytest.raises(ReaderError) as excinfo:
         list(read_json(path))
         assert excinfo.value.context["index"] == 0
+
+
+def test_read_jsonl_invalid_line_reports_number(tmp_path: Path) -> None:
+    """A malformed line in a JSON Lines file names its line number."""
+    path = tmp_path / "bad.jsonl"
+    path.write_text('{"a": 1}\n{invalid}\n')
+    with pytest.raises(ReaderError) as excinfo:
+        list(read_json(path))
+    assert excinfo.value.context["line"] == 2
+
+
+def test_read_jsonl_non_object_line_raises(tmp_path: Path) -> None:
+    """A line holding a scalar is not tabular data."""
+    path = tmp_path / "scalar.jsonl"
+    path.write_text('{"a": 1}\n42\n')
+    with pytest.raises(ReaderError) as excinfo:
+        list(read_json(path))
+    assert excinfo.value.context["line"] == 2
+
+
+def test_read_jsonl_missing_file_raises(tmp_path: Path) -> None:
+    """A missing JSON Lines file raises ReaderError."""
+    with pytest.raises(ReaderError):
+        list(read_json(tmp_path / "nope.jsonl"))
+
+
+def test_read_parquet_missing_file_raises(tmp_path: Path) -> None:
+    """A missing Parquet file raises ReaderError."""
+    with pytest.raises(ReaderError):
+        list(read_parquet(tmp_path / "nope.parquet"))
+
+
+def test_read_file_unreadable_json_raises(tmp_path: Path) -> None:
+    """A JSON file with a bad encoding is reported, not crashed on."""
+    path = tmp_path / "bad.json"
+    path.write_bytes(b"\xff\xfe invalid utf-8")
+    with pytest.raises(ReaderError):
+        list(read_json(path))
