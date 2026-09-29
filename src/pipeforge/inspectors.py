@@ -8,8 +8,15 @@ from pydantic import BaseModel, Field
 
 from pipeforge.config import ColumnSchema, DataType, FileFormat
 from pipeforge.logger import get_logger
-from pipeforge.readers import _infer_format, read_file
-from pipeforge.utils import is_boolean, is_date, is_float, is_integer, is_null
+from pipeforge.readers import infer_format, read_file
+from pipeforge.utils import (
+    Data,
+    is_boolean,
+    is_date,
+    is_float,
+    is_integer,
+    is_null,
+)
 
 logger = get_logger(__name__)
 
@@ -186,6 +193,25 @@ def profile_column(name: str, values: list[Any], row_count: int) -> ColumnProfil
     return profile
 
 
+def profile_rows(rows: Data) -> list[ColumnProfile]:
+    """Profile every column in a set of rows.
+
+    Args:
+        rows: The data to profile.
+
+    Returns:
+        One profile per column, in first-seen order.
+    """
+    names: dict[str, None] = {}
+    for row in rows:
+        for key in row:
+            names[key] = None
+    return [
+        profile_column(name, [row.get(name) for row in rows], len(rows))
+        for name in names
+    ]
+
+
 def inspect_file(path: Path, file_format: FileFormat | None = None) -> InspectionReport:
     """Profile a data file.
 
@@ -201,27 +227,18 @@ def inspect_file(path: Path, file_format: FileFormat | None = None) -> Inspectio
         ReaderError: If the file cannot be read.
     """
     rows = list(read_file(path, file_format))
-    resolved = file_format or _infer_format(path)
-
-    names: dict[str, None] = {}
-    for row in rows:
-        for key in row:
-            names[key] = None
-
-    columns = [
-        profile_column(name, [row.get(name) for row in rows], len(rows))
-        for name in names
-    ]
+    resolved = file_format or infer_format(path)
+    columns = profile_rows(rows)
 
     report = InspectionReport(
         file_name=path.name,
         file_size=path.stat().st_size,
         file_format=resolved,
         row_count=len(rows),
-        column_count=len(names),
+        column_count=len(columns),
         columns=columns,
     )
-    logger.info("Inspected %s: %d rows, %d columns", path.name, len(rows), len(names))
+    logger.info("Inspected %s: %d rows, %d columns", path.name, len(rows), len(columns))
     return report
 
 

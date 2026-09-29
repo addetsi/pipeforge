@@ -15,12 +15,9 @@ from typing import Any
 from pipeforge.config import DataType, TransformRule
 from pipeforge.exceptions import TransformError
 from pipeforge.logger import get_logger
-from pipeforge.utils import is_null
+from pipeforge.utils import Data, Row, is_null
 
 logger = get_logger(__name__)
-
-Row = dict[str, Any]
-Data = list[Row]
 
 
 def log_transform(func: Callable[..., Data]) -> Callable[..., Data]:

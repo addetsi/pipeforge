@@ -21,11 +21,10 @@ import pyarrow.parquet as pq
 from pipeforge.config import FileFormat
 from pipeforge.exceptions import WriterError
 from pipeforge.logger import get_logger
+from pipeforge.utils import Data
 
 logger = get_logger(__name__)
 
-Row = dict[str, Any]
-Data = list[Row]
 
 __all__ = [
     "AtomicPath",

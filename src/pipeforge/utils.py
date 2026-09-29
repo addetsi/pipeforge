@@ -3,6 +3,9 @@
 from datetime import date, datetime
 from typing import Any
 
+Row = dict[str, Any]
+Data = list[Row]
+
 
 def is_null(value: Any) -> bool:
     """Return True if a value represents absence of data.
